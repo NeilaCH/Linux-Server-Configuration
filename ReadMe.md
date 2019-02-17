@@ -99,7 +99,7 @@ $ chmod 700 .ssh
 ```sh
 $ nano .ssh/authorized_keys
 ```
-- Paste you public key. Hit CTRL+X then confirm changes and press Enter.
+- Paste your public key. Hit CTRL+X then confirm changes and press Enter.
 - As security step we must restrict the permissions of the authorized_keys file:
 ```sh
 $ chmod 600 .ssh/authorized_keys
