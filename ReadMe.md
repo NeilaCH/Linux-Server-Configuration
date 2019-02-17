@@ -293,7 +293,7 @@ sudo a2ensite catalog
 sudo service apache2 restart
 ```
 #### Debug
-If you are getting error(s), you cancheck out Apache's error log for debugging:
+If you are getting errors, you can check out Apache's error log for debugging:
  ```sh
  sudo tail /var/log/apache2/error.log
 ```
