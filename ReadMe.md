@@ -1,7 +1,7 @@
 # Linux Server Configuration
 
 This project is for the Full Stuck Udacity [Nanodegree program](https://www.udacity.com/nanodegree).
-The project consists of securing and setting up a Linux server to host Item Catalog Web application project.
+The project consists of securing and setting up a Linux server to host the [Item Catalog Web application project](https://github.com/NeilaCH/Udacity-Item-Catalog).
 
   - Server IP Address: 157.230.166.104
   - URL: http://www.157.230.166.104.xip.io
@@ -22,13 +22,13 @@ The project consists of securing and setting up a Linux server to host Item Cata
 ```sh
 $ ssh root@157.230.166.104
 ```
-- I accepted the warning about host authenticity. Then I provided my root password sent to my email address by DigitalOcean. (I changed the password after login).
+- I accepted the warning about host authenticity. Then I provided my root password sent to my email address by DigitalOcean. I changed the password after login.
 #### Step2: Update and upgrade packages
 - To Update and upgrade packages use the following command: 
 ```sh
 $ sudo apt update && apt upgrade
 ```
-- you might need to reboot the server by running the following command: 
+- You might need to reboot the server with the following command: 
 ```sh
 $ sudo reboot
 ```
@@ -37,7 +37,7 @@ $ sudo reboot
 ```sh
 $ sudo dpkg-reconfigure tzdata
 ```
-- Choose "None of these," then choose UTC in the list and press enter. 
+- Choose "None of these", then choose `UTC`in the list and press enter. 
 #### Step4: Create a New User: Garder
 - While loging in as root run the following command to create a new user namde `grader`. I have entered password `grader` for the user grader:
 ```sh
@@ -63,11 +63,11 @@ $ adduser grader
   Is the information correct? [Y/n]
 ```
 #### Step5: Add Garder to the sudo group
-- `grader` user must be able to run commands with administrative privileges. To do so use the following command to add grader user to the sudo group:
+- `grader` user must be able to run commands with administrative privileges. To do so, use the following command to add grader user to the sudo group:
 ```sh
 $ gpasswd -a grader sudo
 ```
-- You can run commands with sudo to verify.
+- To test it run commands with sudo.
 #### Step6: Add Public Key Authentication
 - On your local machine, open a new terminal window and generate SSh key by typing the following command:
 ```sh
@@ -78,7 +78,7 @@ $ ssh-keygen
 Generating public/private rsa key pair.
 Enter file in which to save the key (/Users/localUser/.ssh/id_rsa):
 ```
-- Press enter to accept the given file. After that, the terminal will ask you to enter a passphrase. In my case leave it blank so I can use the private key for authentication without entering a passphrase.
+- Press enter to accept the given file. After that, the terminal will ask you to enter a passphrase. In my case I leave it blank so I can use the private key for authentication without entering a passphrase.
 ```sh
 Created directory '/Users/localUser/.ssh'.
 Enter passphrase (empty for no passphrase):
@@ -171,9 +171,9 @@ Dillinger is currently extended with the following plugins. Instructions on how 
 # 3.  PostgreSQL
 - As first step install PostgreSQL using these commands:
 ```sh
-sudo apt-get install libpq5
-sudo apt-get install postgresql
-sudo su - postgres
+$ sudo apt-get install libpq5
+$ sudo apt-get install postgresql
+$ sudo su - postgres
 ```
 - Access to the SQL interpreter with `psql`and type these SQL commands:
 ```sh
@@ -186,7 +186,7 @@ $ psql
 #catalog=REVOKE ALL ON SCHEMA public FROM public;
 #REVOKE
 #catalog=GRANT ALL ON SCHEMA public TO catalog;
-GRANT
+#GRANT
 ```
 - To exit interactive Postgres type `\q`.
 # 3.  Install required Packages
@@ -203,14 +203,14 @@ $ sudo pip install --upgrad Flask httplib2 oauth2client sqlalchemy psycopg2 psyc
 Git should already be pre-installed, we have to configure it:
 ```sh
 git config --global user.name "Your NAME"
-git config --global user.email "myemail@domain.com"
+git config --global user.email "your mail@address.com"
 ```
-- Now your git is ready to clone the Item Catalog App. We will clone our app in the default root folder of apache server (/var/www/) and we will make grader the owned of the catalog directory:
+- Now your git is ready to clone the Item Catalog App. We will clone our app in the default root folder of apache server (/var/www/) and we name our directory `catalog`. After that we will make grader user as the owner of the catalog directory:
 ```sh
-sudo git clone git:https://github.com/NeilaCH/Udacity-Item-Catalog.git /var/www/catalog
-sudo chown -R grader:grader /var/www/catalog
+$ sudo git clone git:https://github.com/NeilaCH/Udacity-Item-Catalog.git /var/www/catalog
+$ sudo chown -R grader:grader /var/www/catalog
 ```
--  Apache server requires `mod_wsgi` to run python. To do so we will install wsgi :
+-  Apache server requires `mod_wsgi` to run python. To do so we will install wsgi module:
 ```sh
 $ sudo apt install libapache2-mod-wsgi
 ```
@@ -225,12 +225,12 @@ mv main.py __init__.py
 #### Configure client secret and _ _init__.py
 - Step1: Client Secret. Connect to your project in [Google API credentials](https://console.cloud.google.com/apis/credentials) and add the IP address as Authorized redirect URIs and Authorized JavaScript origins. 
 ### Please Note: 
-Google API will not accept public IPs. You need to have a domain name. In my case, I used [wip.io](http://xip.io). Once you got your domain name do not forget to add it in your droplet.
+Google API will not accept public IPs. You need to have a domain name. In my case, I used [wip.io](http://xip.io). Once you got your domain name add it in your droplet.
 - Step2: Update the client secret using this command:
 ```sh
 cd /var/www/catalog
-sudo touch client_secrets.json
-sudo nano client_secrets.json
+$ sudo touch client_secrets.json
+$ sudo nano client_secrets.json
 ```
 - Step3: Update the _ _init__.py file by modifying:
   - CLIENT_ID = json.loads(open('/var/www/catalog/client_secrets.json', 'r')
@@ -255,7 +255,7 @@ $ sudo nano /etc/apache2/sites-available/catalog.conf
    ServerAdmin chettaoui.neila@gmail.com
     WSGIDaemonProcess application user=grader threads=3
    WSGIScriptAlias / /var/www/catalog/catalog.wsgi
-   <Directory /var/www/catalog/>
+  <Directory /var/www/catalog/>
     WSGIProcessGroup application
     WSGIApplicationGroup %{GLOBAL}
     Require all granted
@@ -285,17 +285,17 @@ import logging
 logging.basicConfig(stream=sys.stderr)
 sys.path.insert(0, "/var/www/catalog/")
 from __init__ import app as application
-application.secret_key = '-??HGqJ??b=S??'
+application.secret_key = '-??ȞGqJ??b=S??'
 ```
 - enable virtual host and restart apache server:
  ```sh
-sudo a2ensite catalog
-sudo service apache2 restart
+$ sudo a2ensite catalog
+$ sudo service apache2 restart
 ```
 #### Debug
 If you are getting errors, you can check out Apache's error log for debugging:
  ```sh
- sudo tail /var/log/apache2/error.log
+$ sudo tail /var/log/apache2/error.log
 ```
 
 ## Resourses:
