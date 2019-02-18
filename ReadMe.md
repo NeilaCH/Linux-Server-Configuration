@@ -197,7 +197,7 @@ $ pip --version
 ```
 - Then, install python packages:
 ```sh
-$ sudo pip install --upgrad Flask httplib2 oauth2client sqlalchemy psycopg2 psycopg2-binary  requests
+$ pip install --upgrad Flask httplib2 oauth2client sqlalchemy psycopg2 psycopg2-binary  requests
 ```
 - To clone Item Catalog application we need Git.
 Git should already be pre-installed, we have to configure it:
